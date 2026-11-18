@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StrokeGuard — Explainable Stroke Risk Prediction</title>
+  <meta name="description" content="An explainable AI-powered stroke risk prediction research prototype. Understand risk, see beyond prediction." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ====================== Navigation ====================== -->
+  <header class="site-header">
+    <div class="header__inner">
+      <a href="index.html" class="brand" aria-label="StrokeGuard home">
+        Stroke<span class="brand--mark">Guard</span>
+      </a>
+
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-list">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav>
+        <ul class="nav__list" id="nav-list">
+          <li><a href="index.html" class="nav__link">Home</a></li>
+          <li><a href="prediction.html" class="nav__link">Prediction</a></li>
+          <li><a href="#about" class="nav__link">About</a></li>
+          <li><a href="#methodology" class="nav__link">Methodology</a></li>
+          <li class="nav__action"><a href="prediction.html" class="btn btn--primary">Assess Risk</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====================== Hero ====================== -->
+  <section class="hero">
+    <div class="hero__orb"></div>
+
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="hero__eyebrow">Explainable Health Intelligence</p>
+        <h1 class="hero__title">
+          Understand Risk.<br />
+          <span class="tint">See Beyond Prediction.</span>
+        </h1>
+        <p class="hero__lead">
+          StrokeGuard is a research prototype that pairs a trained CatBoost
+          classifier with SHAP and LIME explainability. Submit a structured
+          patient assessment and receive a probability-based result together
+          with feature-level explanations showing what drove the model.
+        </p>
+        <div class="hero__ctas">
+          <a href="prediction.html" class="btn btn--primary">Start Assessment</a>
+          <a href="#methodology" class="btn btn--outline">Explore Methodology</a>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <canvas class="hero__canvas" width="700" height="420"></canvas>
+      </div>
+    </div>
+  </section>
+  <!-- ====================== Product Intro ====================== -->
+  <section class="intro section--intro" id="about">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__label">How it works</p>
+        <h2 class="section__title">More than a prediction.</h2>
+        <p class="section__desc">
+          Every assessment moves through three stages: structured patient
+          information, machine-learning analysis, and explainable results.
+        </p>
+      </div>
+
+      <div class="intro__grid">
+        <article class="intro__card">
+          <p class="intro__step">01 — Patient information</p>
+          <h3>Demographic &amp; health input</h3>
+          <p>Age, gender, medical history, lifestyle factors and clinical
+          measures are collected through a validated, accessible form.</p>
+        </article>
+        <article class="intro__card">
+          <p class="intro__step">02 — Machine learning</p>
+          <h3>CatBoost classifier</h3>
+          <p>Submitted information is analysed by a trained CatBoost model
+          that returns a class prediction and a positive-class probability.</p>
+        </article>
+        <article class="intro__card">
+          <p class="intro__step">03 — Explainable results</p>
+          <h3>SHAP &amp; LIME explanations</h3>
+          <p>Feature-level contributions reveal which inputs raised or lowered
+          the predicted probability, for this specific patient.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- ====================== Capabilities ====================== -->
+  <section class="capabilities section">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__label">Platform capabilities</p>
+        <h2 class="section__title">Built for interpretability.</h2>
+        <p class="section__desc">
+          Each capability is designed to make the model's reasoning visible,
+          not hidden.
+        </p>
+      </div>
+
+      <div class="capabilities__grid">
+        <div class="capability">
+          <span class="capability__number">01</span>
+          <span class="capability__tag">Model</span>
+          <h4>ML Prediction</h4>
+          <p>CatBoost classification trained on tabular health data returns
+          stroke / no-stroke with a calibrated probability.</p>
+        </div>
+        <div class="capability">
+          <span class="capability__number">02</span>
+          <span class="capability__tag">Explainability</span>
+          <h4>Explainable AI with SHAP</h4>
+          <p>SHAP values quantify how each feature pushes the prediction up
+          or down relative to the baseline.</p>
+        </div>
+        <div class="capability">
+          <span class="capability__number">03</span>
+          <span class="capability__tag">Interpretability</span>
+          <h4>Local Interpretability with LIME</h4>
+          <p>A local surrogate model highlights the top contributing
+          conditions for this individual assessment.</p>
+        </div>
+        <div class="capability">
+          <span class="capability__number">04</span>
+          <span class="capability__tag">Probability</span>
+          <h4>Probability-based Results</h4>
+          <p>Outputs are expressed as model probabilities, never as clinical
+          diagnoses or medically validated risk percentages.</p>
+        </div>
+        <div class="capability">
+          <span class="capability__number">05</span>
+          <span class="capability__tag">Assessment</span>
+          <h4>Structured Patient Assessment</h4>
+          <p>A validated form captures demographic, medical and lifestyle
+          inputs exactly as the model expects them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== How it works ====================== -->
+  <section class="workflow section">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__label">Process</p>
+        <h2 class="section__title">Four steps to understanding.</h2>
+        <p class="section__desc">
+          From information to explanation, in a single flow.
+        </p>
+      </div>
+
+      <div class="workflow__grid">
+        <div class="workflow__step">
+          <span class="step__num">01</span>
+          <h4>Enter patient information</h4>
+          <p>Complete the structured assessment form with demographic,
+          medical and lifestyle details.</p>
+        </div>
+        <div class="workflow__step">
+          <span class="step__num">02</span>
+          <h4>Submit the assessment</h4>
+          <p>The information is validated and sent to the CatBoost model for
+          analysis.</p>
+        </div>
+        <div class="workflow__step">
+          <span class="step__num">03</span>
+          <h4>Receive the prediction</h4>
+          <p>View the class prediction and positive-class probability with
+          model context.</p>
+        </div>
+        <div class="workflow__step">
+          <span class="step__num">04</span>
+          <h4>Explore the explanation</h4>
+          <p>Review SHAP and LIME contributions to understand what drove the
+          result.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ====================== Methodology ====================== -->
+  <section class="methodology section" id="methodology">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__label">ML methodology</p>
+        <h2 class="section__title">How the model was built.</h2>
+        <p class="section__desc">
+          A transparent overview of the approach and what is implemented
+          versus still under evaluation.
+        </p>
+      </div>
+
+      <div class="methodology__grid">
+        <div>
+          <ul class="methodology__list">
+            <li><strong>Tabular healthcare dataset.</strong> Structured
+            patient records with demographic, clinical and lifestyle features.</li>
+            <li><strong>Data cleaning &amp; feature preparation.</strong>
+            Missing-value handling, categorical encoding and feature alignment
+            with the training schema.</li>
+            <li><strong>Class imbalance considerations.</strong> Stroke is
+            relatively rare; the training pipeline accounts for imbalance.</li>
+            <li><strong>CatBoost classification.</strong> A gradient-boosted
+            decision-tree model handles categorical features natively.</li>
+            <li><strong>SHAP global interpretability.</strong> Feature-level
+            contribution values explain each prediction.</li>
+            <li><strong>LIME local interpretability.</strong> A local linear
+            surrogate approximates the model around an individual patient.</li>
+            <li><strong>Probability calibration evaluation.</strong>
+            Assessing whether predicted probabilities align with observed
+            outcomes (under evaluation).</li>
+          </ul>
+          <p class="methodology__note">
+            <strong>Implemented:</strong> CatBoost prediction + SHAP.<br />
+            <strong>Under evaluation:</strong> probability calibration and
+            full LIME integration in this build.
+          </p>
+        </div>
+
+        <div class="methodology__panel">
+          <h4>Responsible framing</h4>
+          <p>This is a research prototype, not a certified medical device.
+          Model outputs are not diagnoses and should not replace professional
+          medical consultation.</p>
+          <p><span class="status-tag status-tag--implemented"><span class="status-tag__dot"></span>Implemented</span>
+          <span class="status-tag status-tag--evaluation"><span class="status-tag__dot"></span>Under evaluation</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== Responsible AI ====================== -->
+  <section class="responsible section">
+    <div class="container">
+      <div class="section__head">
+        <p class="section__label">Responsible AI</p>
+        <h2 class="section__title">Important limitations.</h2>
+        <p class="section__desc">
+          What this prototype is — and what it is not.
+        </p>
+      </div>
+
+      <div class="responsible__grid">
+        <div class="responsible__card">
+          <h4>Not a diagnosis</h4>
+          <p>Model predictions are not medical diagnoses. Results should not
+          replace consultation with a qualified healthcare professional.</p>
+        </div>
+        <div class="responsible__card">
+          <h4>Outputs may contain errors</h4>
+          <p>Machine-learning models can be wrong. Treat every result as an
+          indicative signal, not a definitive answer.</p>
+        </div>
+        <div class="responsible__card">
+          <h4>Research &amp; education</h4>
+          <p>This prototype is intended for research and educational
+          demonstration of explainable ML, not independent medical decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== Final CTA ====================== -->
+  <section class="cta-final section">
+    <div class="container">
+      <h2 class="cta-final__title">Make the assessment.<br />
+      Understand the reasoning.</h2>
+      <p class="cta-final__desc">
+        Enter patient information and explore an explainable model prediction
+        with SHAP and LIME feature-level contributions.
+      </p>
+      <a href="prediction.html" class="btn btn--primary">Start Prediction</a>
+    </div>
+  </section>
+
+  <!-- ====================== Footer ====================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          Stroke<span class="brand--mark">Guard</span>
+          <p class="footer__desc">
+            An explainable AI-powered stroke risk prediction research
+            prototype. For research and educational demonstration.
+          </p>
+          <p class="disclaimer">
+            Not a certified medical device. Outputs are not medical
+            diagnoses.
+          </p>
+        </div>
+
+        <div class="footer__nav">
+          <div class="footer__col">
+            <h5>Platform</h5>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="prediction.html">Prediction</a></li>
+              <li><a href="#methodology">Methodology</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h5>Responsible AI</h5>
+            <ul>
+              <li><a href="#responsible">Limitations</a></li>
+              <li><a href="#methodology">Not a diagnosis</a></li>
+              <li><a href="#methodology">Research prototype</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2026 StrokeGuard. All rights reserved.</span>
+        <span>Research prototype — no patient data is stored.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Risk Assessment — StrokeGuard</title>
+  <meta name="description" content="Enter patient information to generate an explainable stroke risk prediction." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/prediction.css" />
+</head>
+<body>
+
+  <!-- ====================== Navigation ====================== -->
+  <header class="site-header">
+    <div class="header__inner">
+      <a href="index.html" class="brand" aria-label="StrokeGuard home">
+        Stroke<span class="brand--mark">Guard</span>
+      </a>
+
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav>
+        <ul class="nav__list" id="nav-list">
+          <li><a href="index.html" class="nav__link">Home</a></li>
+          <li><a href="prediction.html" class="nav__link" aria-current="page">Prediction</a></li>
+          <li><a href="index.html#about" class="nav__link">About</a></li>
+          <li><a href="index.html#methodology" class="nav__link">Methodology</a></li>
+          <li class="nav__action"><a href="prediction.html" class="btn btn--primary">Assess Risk</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====================== Page header ====================== -->
+  <section class="page-header">
+    <div class="page-header__inner">
+      <p class="page__eyebrow">Patient Risk Assessment</p>
+      <h1 class="page__title">Enter patient information</h1>
+      <p class="page__lead">
+        Complete the assessment form below. The information is analysed by a
+        trained CatBoost model and returned with SHAP and LIME
+        feature-level explanations.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================== Assessment form ====================== -->
+  <section class="assessment">
+    <div class="assessment__inner">
+      <form id="assessment-form" novalidate>
+
+        <!-- Section A: Personal -->
+        <div class="form__section" id="section-personal">
+          <div class="form__section__head">
+            <span class="form__section__num">A</span>
+            <h2 class="form__section__title">Personal Information</h2>
+          </div>
+          <p class="form__section__desc">Demographic and background details.</p>
+
+          <div class="field">
+            <label class="field__label" for="age">Age <abbr title="required">*</abbr></label>
+            <input class="field__input" type="number" id="age" name="age" min="1" max="120" value="55" required placeholder="e.g. 55" />
+            <div class="field__hint">Patient age in years.</div>
+            <div class="field__error">Please enter a valid age (1–120).</div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="gender">Gender <abbr title="required">*</abbr></label>
+            <select class="field__select" id="gender" name="gender" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="field__error">Please select a gender.</div>
+          </div>
+
+          <div class="field check-group">
+            <label class="field__label" style="margin-bottom:0;">Ever Married <abbr title="required">*</abbr></label>
+            <div style="margin-top:0.4rem;">
+              <label><input type="radio" name="ever_married" value="Yes" required /> Yes</label>
+              <label><input type="radio" name="ever_married" value="No" /> No</label>
+            </div>
+            <div class="field__error">Please select an option.</div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="residence_type">Residence Type <abbr title="required">*</abbr></label>
+            <select class="field__select" id="residence_type" name="residence_type" required>
+              <option value="">Select</option>
+              <option value="Urban">Urban</option>
+              <option value="Rural">Rural</option>
+            </select>
+            <div class="field__error">Please select a residence type.</div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="work_type">Work Type <abbr title="required">*</abbr></label>
+            <select class="field__select" id="work_type" name="work_type" required>
+              <option value="">Select</option>
+              <option value="Private">Private</option>
+              <option value="Self-employed">Self-employed</option>
+              <option value="Govt_job">Govt_job</option>
+              <option value="Children">Children</option>
+              <option value="Never_worked">Never_worked</option>
+            </select>
+            <div class="field__error">Please select a work type.</div>
+          </div>
+        </div>
+        <!-- Section B: Medical -->
+        <div class="form__section form__section--medical" id="section-medical">
+          <div class="form__section__head">
+            <span class="form__section__num">B</span>
+            <h2 class="form__section__title">Medical Information</h2>
+          </div>
+          <p class="form__section__desc">Clinical history and biometrics.</p>
+
+          <div class="field check-group">
+            <label class="field__label" style="margin-bottom:0;">Hypertension <abbr title="required">*</abbr></label>
+            <div style="margin-top:0.4rem;">
+              <label><input type="radio" name="hypertension" value="1" required /> Yes</label>
+              <label><input type="radio" name="hypertension" value="0" /> No</label>
+            </div>
+            <div class="field__error">Please select an option.</div>
+          </div>
+
+          <div class="field check-group">
+            <label class="field__label" style="margin-bottom:0;">Heart Disease <abbr title="required">*</abbr></label>
+            <div style="margin-top:0.4rem;">
+              <label><input type="radio" name="heart_disease" value="1" required /> Yes</label>
+              <label><input type="radio" name="heart_disease" value="0" /> No</label>
+            </div>
+            <div class="field__error">Please select an option.</div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="avg_glucose_level">Average Glucose Level <abbr title="required">*</abbr></label>
+            <input class="field__input" type="number" id="avg_glucose_level" name="avg_glucose_level" min="0" max="500" step="0.1" value="110" required placeholder="e.g. 110" />
+            <div class="field__hint">mg/dL.</div>
+            <div class="field__error">Please enter a valid glucose level (0–500 mg/dL).</div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="bmi">BMI <span style="font-weight:500;color:var(--color-text-soft);">(optional)</span></label>
+            <input class="field__input" type="number" id="bmi" name="bmi" min="10" max="70" step="0.1" value="27" placeholder="e.g. 27" />
+            <div class="field__hint">Body mass index (kg/m&sup2;). Leave empty if unknown — the model uses a missing-value indicator rather than substituting zero.</div>
+            <div class="field__error">Please enter a valid BMI (10–70 kg/m&sup2;).</div>
+          </div>
+        </div>
+
+        <!-- Section C: Lifestyle -->
+        <div class="form__section form__section--lifestyle" id="section-lifestyle">
+          <div class="form__section__head">
+            <span class="form__section__num">C</span>
+            <h2 class="form__section__title">Lifestyle Information</h2>
+          </div>
+          <p class="form__section__desc">Smoking status.</p>
+
+          <div class="field">
+            <label class="field__label" for="smoking_status">Smoking Status <abbr title="required">*</abbr></label>
+            <select class="field__select" id="smoking_status" name="smoking_status" required>
+              <option value="">Select</option>
+              <option value="formerly smoked">formerly smoked</option>
+              <option value="never smoked">never smoked</option>
+              <option value="smokes">smokes</option>
+              <option value="Unknown">Unknown</option>
+            </select>
+            <div class="field__error">Please select a smoking status.</div>
+          </div>
+        </div>
+
+        <!-- Section D: Actions -->
+        <div class="form__section" id="section-actions">
+          <div class="form__actions">
+            <button type="button" class="btn btn--outline" id="btn-reset">Clear Form</button>
+            <button type="submit" class="btn btn--primary" id="btn-submit">Analyze Patient</button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Loading overlay -->
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="loading__spinner"></div>
+        <div class="loading__text">Analyzing</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== Results (shown after prediction) ====================== -->
+  <section class="results" id="results" aria-live="polite" style="display:none;">
+    <div class="assessment__inner">
+      <h2 class="results__title">Assessment Result</h2>
+      <p class="results__subtitle">
+        The model has processed the submitted information. Below is the
+        prediction and an explanation of what drove it.
+      </p>
+
+      <div class="results__grid">
+        <!-- Prediction card -->
+        <div class="prediction-card" id="prediction-card">
+          <div class="prediction__badge" id="prediction-badge" role="status">No Stroke</div>
+          <div class="prediction__label" id="prediction-label">No Stroke</div>
+          <div class="prediction__prob">
+            Positive-class probability: <span class="big" id="probability-value">0.00</span>
+          </div>
+        </div>
+
+        <!-- Model info -->
+        <div class="model-info">
+          <div class="model-info__row">
+            <span class="model-info__k">Model</span>
+            <span class="model-info__v" id="model-name">CatBoost Classifier</span>
+          </div>
+          <div class="model-info__row">
+            <span class="model-info__k">Timestamp</span>
+            <span class="model-info__v" id="prediction-timestamp">—</span>
+          </div>
+          <div class="model-info__row">
+            <span class="model-info__k">Explanations</span>
+            <span class="model-info__v" id="explanation-status">—</span>
+          </div>
+        </div>
+
+        <!-- SHAP -->
+        <div class="explainer" id="shap-block">
+          <div class="explainer__head">
+            <h3>SHAP Explanation</h3>
+          </div>
+          <div class="contribs__list" id="shap-list"></div>
+          <p class="explainer__note">
+            SHAP values show how each feature moved the prediction relative to
+            the model baseline. Positive values increase the predicted
+            probability of stroke; negative values decrease it.
+          </p>
+        </div>
+
+        <!-- LIME -->
+        <div class="explainer" id="lime-block">
+          <div class="explainer__head">
+            <h3>LIME Explanation</h3>
+          </div>
+          <div class="contribs__list" id="lime-list"></div>
+          <p class="explainer__note">
+            LIME is a local surrogate model. Weights reflect the local linear
+            approximation around this patient, not the global CatBoost model.
+          </p>
+        </div>
+
+        <!-- Patient summary -->
+        <div class="summary">
+          <div class="summary__head">
+            <h3>Patient Summary</h3>
+          </div>
+          <div class="summary__grid" id="patient-summary"></div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer-box">
+        <p><strong>Important:</strong> This result is a machine-learning
+        prediction, not a medical diagnosis. It should not be used to make
+        independent medical decisions or replace consultation with a qualified
+        healthcare professional. Model outputs may contain errors.</p>
+      </div>
+
+      <div class="reset-actions">
+        <button type="button" class="btn btn--outline" id="btn-new-assessment">Start a New Assessment</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" style="padding:3rem 0 2rem;">
+    <div class="container">
+      <div class="footer__bottom" style="display:flex;flex-direction:column;gap:0.8rem;text-align:center;">
+        <span>&copy; 2026 StrokeGuard. All rights reserved.</span>
+        <span style="font-size:0.8rem;color:#8a8678;">Research prototype &mdash; no patient data is stored.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="js/prediction.js" defer></script>
+</body>
+</html>
