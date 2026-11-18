@@ -206,21 +206,39 @@
     const formData = new FormData(form);
     const payload = {};
 
-    
     // Validate gender field
-    const genderValue = formData.get('gender')
+    const genderValue = formData.get('gender');
     if (!genderValue || !'Male Female Other'.includes(genderValue)) {
-        showApiError('Please select a valid gender (Male, Female, or Other).')
-        resultsSection.style.display = 'none'
-        return
+      showApiError('Please select a valid gender (Male, Female, or Other).');
+      resultsSection.style.display = 'none';
+      return;
     }
-payload.gender = formData.get('gender');
+    payload.gender = genderValue;
+
+    // Validate work_type field
+    const workTypeValue = formData.get('work_type');
+    const allowedWorkTypes = ['Private', 'Self-employed', 'Govt_job', 'Children', 'Never_worked'];
+    if (!workTypeValue || !allowedWorkTypes.includes(workTypeValue)) {
+      showApiError('Please select a valid work type (Private, Self-employed, Govt_job, Children, or Never_worked).');
+      resultsSection.style.display = 'none';
+      return;
+    }
+    payload.work_type = workTypeValue;
+
+    // Validate residence_type field
+    const residenceTypeValue = formData.get('residence_type');
+    const allowedResidenceTypes = ['Urban', 'Rural'];
+    if (!residenceTypeValue || !allowedResidenceTypes.includes(residenceTypeValue)) {
+      showApiError('Please select a valid residence type (Urban or Rural).');
+      resultsSection.style.display = 'none';
+      return;
+    }
+    payload.residence_type = residenceTypeValue;
+
     payload.age = parseFloat(formData.get('age'));
     payload.hypertension = parseInt(formData.get('hypertension') || '0', 10);
     payload.heart_disease = parseInt(formData.get('heart_disease') || '0', 10);
     payload.ever_married = formData.get('ever_married');
-    payload.work_type = formData.get('work_type');
-    payload.residence_type = formData.get('residence_type');
     payload.avg_glucose_level = parseFloat(formData.get('avg_glucose_level'));
 
     const bmiRaw = formData.get('bmi');
